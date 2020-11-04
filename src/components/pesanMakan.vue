@@ -3,6 +3,7 @@
     <b-row>
         <b-col md="8" offset-md="2">
             <b-form @submit.prevent="tambahPesanan">
+                <b-form-file v-model="inputGambar" class="mt-3" plain></b-form-file>
                 <b-input-group class="mt-3 mb-3">
                     <b-form-input v-model="inputMakanan" placeholder="Masukkan Makan..." required></b-form-input>
                 </b-input-group>
@@ -28,6 +29,7 @@
                         {{ pesan.makanan }},
                         {{ pesan.minuman }} :
                         {{ pesan.opsipesan }}
+                        <img v-bind:src="'/img/'+  pesan.gambar" width="250px">
                     </b-col>
                     <b-col md="6" align="right">
                         <b-button variant="danger" @click="deletePesan(pesan.id)">
@@ -55,6 +57,7 @@ export default {
         return {
             inputMakanan: "",
             inputMinuman: "",
+            inputGambar: null,
             opsi: null,
             opsis: [{
                 text: 'Makan disini atau Dibungkus',
@@ -69,10 +72,12 @@ export default {
                 id: v1(),
                 makanan: this.inputMakanan,
                 minuman: this.inputMinuman,
+                gambar: this.inputGambar.name,
                 opsipesan: this.opsi,
             });
             this.inputMakanan = ""
             this.inputMinuman = ""
+            this.inputGambar = null
             this.opsi = null
         },
     },
